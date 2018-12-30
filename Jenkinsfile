@@ -3,12 +3,10 @@ pipeline {
     stages{
         stage('Build'){
             steps{
-                sh "docker build . -t tomcatwebapp:${env.BUILD_ID}"
+                sh '/opt/apache-maven-3.5.2/bin/mvn clean package'
+                sh "docker build . -t dcokerdemonodejs:${env.BUILD_ID}"
             }
         }
-        stage('docker build/push') {
-            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-            def app = docker.build("nandun123/docker-nodejs-demo:${commit_id}", '.').push()
     } 	 	
 }
     
